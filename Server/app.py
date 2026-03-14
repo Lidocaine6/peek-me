@@ -86,6 +86,7 @@ def update():
     
 
 @app.route('/api/spy')
+@verification_required
 def spy():
     response = ''
     for device in device_list:
