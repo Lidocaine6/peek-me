@@ -53,9 +53,9 @@ class SpyApp:
             )
             return response.json()
         except RequestException as e:
-            self.display_error(f'网络错误：{e}')
+            self.handle_error(e)
     
-    def display_error(self, error_name):
+    def handle_error(self, exception: str | Exception):
         pass
 
     def on_show(self):
