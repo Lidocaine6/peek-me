@@ -4,6 +4,12 @@ import threading
 import logging
 import time
 import sys
+import os
+import dotenv
+import requests
+from requests.exceptions import RequestException
+
+from config import Config
 
 class SpyApp:
     def __init__(self):
@@ -20,6 +26,8 @@ class SpyApp:
             menu
         )
         self.tray_thread = threading.Thread(target=self.icon.run, daemon=True)
+        dotenv.load_dotenv()
+        self.token = os.getenv('TOKEN')
 
     def run(self):
         logging.info('App running')
@@ -30,6 +38,24 @@ class SpyApp:
         except KeyboardInterrupt:
             self.icon.stop()
             sys.exit()
+
+    def update_data(self, program_name, extra_data=''):
+        try:
+            response = requests.post(
+                url=Config.server_addr + '/api/update',
+                json={
+                    'token': self.token,
+                    'device_name': 'Windows',
+                    'program_name': program_name,
+                    'extra_data': extra_data,
+                },
+            )
+            return response.json()
+        except RequestException as e:
+            self.display_error(f'网络错误：{e}')
+    
+    def display_error(self, error_name):
+        pass
 
     def on_show(self):
         print('显示')

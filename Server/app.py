@@ -83,6 +83,9 @@ def update():
             'error': 'Invalid device name'
         }), 400
     device_list[device_name].update(program_name, extra_data)
+    return jsonify({
+        'message': f'Updated data of device {device_name}'
+    }), 200
     
 
 @app.route('/api/spy')
