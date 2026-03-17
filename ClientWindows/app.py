@@ -1,10 +1,11 @@
-from PIL import Image
-import pystray
 import threading
 import logging
 import time
 import sys
 import os
+
+from PIL import Image
+import pystray
 import dotenv
 import requests
 from requests.exceptions import RequestException
