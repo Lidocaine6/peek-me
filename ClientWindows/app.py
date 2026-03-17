@@ -12,7 +12,7 @@ from requests.exceptions import RequestException
 
 from config import Config
 
-class SpyApp:
+class PeekMeApp:
     def __init__(self):
         logging.info('App created')
         tray_image = Image.open('icon.png')
@@ -21,9 +21,9 @@ class SpyApp:
             pystray.MenuItem('退出', self.on_quit),
         )
         self.icon = pystray.Icon(
-            'spy_icon',
+            'peekme_icon',
             tray_image,
-            'SpyMeWindows',
+            'PeekMeWindows',
             menu
         )
         self.tray_thread = threading.Thread(target=self.icon.run, daemon=True)

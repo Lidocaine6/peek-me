@@ -6,5 +6,5 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
-spy_app = app.SpyApp()
-spy_app.run()
+peekme_app = app.PeekMeApp()
+peekme_app.run()
