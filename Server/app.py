@@ -78,7 +78,7 @@ def required_params(*params):
         return decorated_func
     return wrapper
 
-@app.route('/api/update')
+@app.route('/api/update', methods=['POST'])
 @verification_required
 @required_params('device_name', 'program_name')
 def update():
@@ -94,7 +94,7 @@ def update():
         'message': f'Updated data of device {device_name}'
     }), 200
 
-@app.route('/api/peek')
+@app.route('/api/peek', methods=['POST'])
 @verification_required
 def peek():
     response = ''
