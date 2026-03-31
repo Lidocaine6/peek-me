@@ -15,6 +15,12 @@ device_format_string = """
 - 更新时间：{time}
 """.strip()
 
+device_offline_string = """
+设备：{device_name}
+- 离线
+- 更新时间：{time}
+"""
+
 class Device:
     def __init__(self, device_name: str, online: bool=True):
         self.device_name = device_name
