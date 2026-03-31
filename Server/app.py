@@ -44,7 +44,7 @@ class Device:
 
     def switch_online_state(self, state: bool=None):
         self.time_last_updated = datetime.now()
-        if state:
+        if state is None:
             self.online = not self.online
         else:
             self.online = state
