@@ -87,11 +87,10 @@ def update():
     return jsonify({
         'message': f'Updated data of device {device_name}'
     }), 200
-    
 
-@app.route('/api/spy')
+@app.route('/api/peek')
 @verification_required
-def spy():
+def peek():
     response = ''
     for device in device_list:
         response += device_list[device].to_string()
