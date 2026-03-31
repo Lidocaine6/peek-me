@@ -97,12 +97,8 @@ def update():
 @app.route('/api/peek', methods=['POST'])
 @verification_required
 def peek():
-    response = ''
-    for device in device_list:
-        response += device_list[device].to_string()
-        response += '\n'
-    response.strip()
-    return response
+    lines = [device.to_string() for device in device_list.values()]
+    return '\n'.join(lines), 200
 
 
 if __name__ == '__main__':
