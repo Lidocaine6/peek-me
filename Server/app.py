@@ -1,13 +1,15 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import wraps
 import logging
 import os
+import pytz
 
 import dotenv
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 token = ''
+global_timezone = pytz.timezone('Asia/Shanghai')
 
 device_format_string = """
 设备：{device_name}
@@ -27,10 +29,10 @@ class Device:
         self.online = online
         self.program_name = ''
         self.extra_data = ''
-        self.time_last_updated = datetime.now()
+        self.time_last_updated = datetime.now(global_timezone)
 
     def update(self, program_name: str, extra_data: str=''):
-        self.time_last_updated = datetime.now()
+        self.time_last_updated = datetime.now(global_timezone)
         self.program_name = program_name
         self.extra_data = extra_data
     
@@ -43,7 +45,7 @@ class Device:
         )
 
     def switch_online_state(self, state: bool=None):
-        self.time_last_updated = datetime.now()
+        self.time_last_updated = datetime.now(global_timezone)
         if state is None:
             self.online = not self.online
         else:
