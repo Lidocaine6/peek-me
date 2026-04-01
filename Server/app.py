@@ -62,7 +62,7 @@ def verification_required(func):
             return jsonify({
                 'error': 'Verification failed'
             }), 401
-        func(*args, **kwargs)
+        return func(*args, **kwargs)
     return wrapper
 
 def required_params(*params):
