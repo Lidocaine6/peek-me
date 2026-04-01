@@ -72,7 +72,7 @@ def required_params(*params):
             missing = [param for param in params if param not in request.form]
             if missing:
                 return jsonify({
-                    'error': 'Invalid argument',
+                    'error': f'Missing required parameter(s): {", ".join(missing)}',
                 }), 400
             return f(*args, **kwargs)
         return decorated_func
