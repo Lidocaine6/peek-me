@@ -25,11 +25,11 @@ device_offline_string = """
 
 class Device:
     def __init__(self, device_name: str, online: bool=True):
-        self.device_name = device_name
-        self.online = online
-        self.program_name = ''
-        self.extra_data = ''
-        self.time_last_updated = datetime.now(global_timezone)
+        self.device_name: str = device_name
+        self.online: bool = online
+        self.program_name: str = ''
+        self.extra_data: str = ''
+        self.time_last_updated: datetime = datetime.now(global_timezone)
 
     def update(self, program_name: str, extra_data: str=''):
         self.time_last_updated = datetime.now(global_timezone)
