@@ -2,14 +2,14 @@ from datetime import datetime, timezone
 from functools import wraps
 import logging
 import os
-import pytz
+from zoneinfo import ZoneInfo
 
 import dotenv
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 token = ''
-global_timezone = pytz.timezone('Asia/Shanghai')
+global_timezone = ZoneInfo('Asia/Shanghai')
 
 device_format_string = """
 设备：{device_name}
