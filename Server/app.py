@@ -43,6 +43,15 @@ class Device:
             extra_data='\n- ' + self.extra_data if self.extra_data != '' else '',
             time=self.time_last_updated.strftime('%Y/%m/%d/ %H:%M:%S')
         )
+    
+    def to_dict(self):
+        return {
+            'device_name': self.device_name,
+            'online': self.online,
+            'program_name': self.program_name,
+            'extra_data': self.extra_data,
+            'time_last_updated': self.time_last_updated.isoformat()
+        }
 
     def switch_online_state(self, state: bool=None):
         self.time_last_updated = datetime.now(global_timezone)
@@ -99,8 +108,13 @@ def update():
 @app.route('/api/peek', methods=['POST'])
 @verification_required
 def peek():
-    lines = [device.to_string() for device in device_list.values()]
-    return '\n'.join(lines), 200
+    return_format = request.form.get('format', 'text')
+    if return_format == 'text':
+        lines = [device.to_string() for device in device_list.values()]
+        return '\n'.join(lines), 200
+    elif return_format == 'json':
+        data = {device_name: device.to_dict() for device_name, device in device_list.items()}
+        return jsonify(data), 200
 
 
 if __name__ == '__main__':
