@@ -9,7 +9,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 token = ''
-global_timezone = ZoneInfo('Asia/Shanghai')
+GLOBAL_TIMEZONE = ZoneInfo('Asia/Shanghai')
 
 device_format_string = """
 设备：{device_name}
@@ -29,10 +29,10 @@ class Device:
         self.online: bool = online
         self.program_name: str = ''
         self.extra_data: str = ''
-        self.time_last_updated: datetime = datetime.now(global_timezone)
+        self.time_last_updated: datetime = datetime.now(GLOBAL_TIMEZONE)
 
     def update(self, program_name: str, extra_data: str=''):
-        self.time_last_updated = datetime.now(global_timezone)
+        self.time_last_updated = datetime.now(GLOBAL_TIMEZONE)
         self.program_name = program_name
         self.extra_data = extra_data
     
@@ -54,7 +54,7 @@ class Device:
         }
 
     def switch_online_state(self, state: bool=None):
-        self.time_last_updated = datetime.now(global_timezone)
+        self.time_last_updated = datetime.now(GLOBAL_TIMEZONE)
         if state is None:
             self.online = not self.online
         else:
