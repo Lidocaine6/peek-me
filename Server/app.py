@@ -69,6 +69,16 @@ device_list = {
     'Android': Device('📱手机'),
 }
 
+def json_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not request.is_json:
+            return jsonify({
+                'error': 'Invalid format'
+            }), 400
+        return func(*args, **kwargs)
+    return wrapper
+
 def verification_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -96,6 +106,7 @@ def required_params(*params):
 @app.route('/api/update', methods=['POST'])
 @verification_required
 @required_params('device_name', 'program_name')
+@json_required
 def update():
     device_name = request.form['device_name']
     program_name = request.form['program_name']
