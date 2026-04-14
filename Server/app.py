@@ -10,6 +10,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 token = ''
 GLOBAL_TIMEZONE = ZoneInfo('Asia/Shanghai')
+UTC_TIMEZONE = ZoneInfo('UTC')
 
 device_format_string = """
 设备：{device_name}
@@ -29,19 +30,21 @@ class Device:
         self.online: bool = online
         self.program_name: str = ''
         self.extra_data: str = ''
-        self.time_last_updated: datetime = datetime.now(GLOBAL_TIMEZONE)
+        self.time_last_updated: datetime = datetime.now(UTC_TIMEZONE)
 
     def update(self, program_name: str, extra_data: str=''):
-        self.time_last_updated = datetime.now(GLOBAL_TIMEZONE)
+        self.time_last_updated = datetime.now(UTC_TIMEZONE)
         self.program_name = program_name
         self.extra_data = extra_data
     
     def to_string(self):
+        # Only convert timezone in to_string
+        converted_timezone = self.time_last_updated.astimezone(GLOBAL_TIMEZONE)
         return device_format_string.format(
             device_name=self.device_name,
             program_name=self.program_name,
             extra_data='\n- ' + self.extra_data if self.extra_data != '' else '',
-            time=self.time_last_updated.strftime('%Y/%m/%d/ %H:%M:%S')
+            time=converted_timezone.strftime('%Y/%m/%d/ %H:%M:%S')
         )
     
     def to_dict(self):
