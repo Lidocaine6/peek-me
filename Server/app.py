@@ -11,6 +11,7 @@ app = Flask(__name__)
 token = ''
 GLOBAL_TIMEZONE = ZoneInfo('Asia/Shanghai')
 UTC_TIMEZONE = ZoneInfo('UTC')
+SERVER_PORT = 8868
 
 device_format_string = """
 设备：{device_name}
@@ -123,5 +124,5 @@ def peek():
 if __name__ == '__main__':
     dotenv.load_dotenv()
     token = os.getenv('TOKEN')
-    app.run()
+    app.run(port=SERVER_PORT)
     
